@@ -65,6 +65,12 @@
  */
 #define RED_BUTTON_AS_BACK
 
+/*
+ * Use middle button as forward button.
+ * Software handler for marble fx can be same as marble mouse
+ */
+#define MIDDLE_BUTTON_AS_FORWARD
+
 #define REVERT_Y_AXIS
 
 #ifdef REVERT_Y_AXIS
@@ -357,10 +363,18 @@ void loop()
     // handle middle button
     bool middleButton = mstat & 0x04;
     if (!oldMiddleButton && middleButton) {
+#ifndef MIDDLE_BUTTON_AS_FORWARD
       MOUSE_PRESS(MOUSE_MIDDLE);
+#else
+      MOUSE_PRESS(MOUSE_FORWARD);
+#endif
     }
     else if (oldMiddleButton && !middleButton) {
+#ifndef MIDDLE_BUTTON_AS_FORWARD
       MOUSE_RELEASE(MOUSE_MIDDLE);
+#else
+      MOUSE_RELEASE(MOUSE_FORWARD);
+#endif
     }
     oldMiddleButton = middleButton;
 
